@@ -5,7 +5,10 @@ type NavbarProps = {
     children: ReactNode
 }
 
-export const Navbar = ({ children }:
+export const NavBar = ({ children }:
     NavbarProps) => {
-    return <div className='navbar'>{children}</div>
+
+    return (
+        <>        <div className={'blurObj'}></div>
+            <div className='navbar floating'>{children}</div></>)
 }

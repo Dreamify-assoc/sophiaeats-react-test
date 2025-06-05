@@ -1,87 +1,61 @@
-import { useEffect, useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import { Home } from './comps/Home'
+import {useEffect, useState} from 'react'
+import {Home} from './comps/Home'
+
+import './assets/fonts/Fonts.css'
 import './App.css'
-import { useAtom } from 'jotai'
-import { navStateAtom } from './atoms'
-import { Navbar } from './comps/Navbar'
-import { NavItem } from './comps/NavItem'
+import {useAtom, useAtomValue} from 'jotai'
+import {navStateAtom} from './atoms'
+import {NavBar} from './comps/NavBar'
+import {Ticket} from './comps/Ticket'
+import {Favorite} from './comps/Favorite'
+import {NavItem} from './comps/NavItem'
+import {AppBar} from './comps/AppBar'
+import {Menu} from './comps/Menu'
+
+import {Modal} from "./comps/controls/modal/Modal.tsx";
+import { Routes, Route} from 'react-router-dom'
+import {RootView} from "./RootView.tsx";
+import {Cart} from "./comps/Cart.tsx";
+
 function App() {
 
 
-    const [navState, setNavState] = useAtom(navStateAtom)
+    const navState = useAtomValue(navStateAtom)
 
     const mainView = () => {
         switch (navState) {
+            case "ticket":
+                return (
+                    <Ticket></Ticket>
+                )
+                break;
             case 'home':
                 return (
                     <Home></Home>
 
                 )
-
+            case 'menu':
+                return (
+                    <Menu></Menu>
+                )
+            case 'favorite':
+                return (
+                    <Favorite/>
+                )
             default:
                 return (
-                    <Home></Home>
+                    <Home/>
                 )
         }
     }
     return (
+
         <>
+                <Routes>
+                    <Route path={"/"} element={<RootView />}/>
+                    <Route path={"/cart"} element={<Cart />}/>
 
-            <div>
-                {
-                    mainView()
-                }
-            </div>
-            <Navbar>
-                <NavItem icon="home" label="ホーム" onClick={() =>
-                    setNavState("home")} />
-                <NavItem icon="menu_book" label="メニュー" onClick={() => setNavState("menu")} />
-                <NavItem icon="favorite" label="お気に入り" onClick={() => setNavState("favorite")} />
-                <NavItem icon="qr_code" label="食券" />
-
-            </Navbar>
-            {/*
-            <div className="navbar"> 
-                <div className={
-                     navState !== 'home'?'navbarItem focused':'navbarItem' 
-                }>
-                    <div className="navbarItemIcon">
-                        <span className="material-symbols-rounded">
-                        home
-                        </span>
-                    </div>
-                    <div className="navbarItemTitle">ホーム</div>
-                </div>
-                <div className="navbarItem"
-                onClick={()=>{
-                    setNavState('menu')
-                }}>
-                    <div className="navbarItemIcon">
-                        <span className="material-symbols-rounded">
-                        menu_book
-                        </span>
-                    </div>
-                    <div className="navbarItemTitle">メニュー</div>
-                </div>
-                <div className="navbarItem">
-                    <div className="navbarItemIcon">
-                        <span className="material-symbols-rounded">
-                        favorite
-                        </span>
-
-                    </div>
-                    <div className="navbarItemTitle">お気に入り</div>
-                </div>
-                <div className="navbarItem">
-                    <div className="navbarItemIcon">
-                        <span className={"material-symbols-rounded"}>qr_code</span> </div>
-                    <div className="navbarItemTitle">食券</div>
-                    
-                </div>
-            </div>
-            */}
+                </Routes>
         </>
     );
 }

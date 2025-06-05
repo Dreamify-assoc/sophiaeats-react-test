@@ -1,14 +1,22 @@
+import {useAtom} from "jotai/index";
+import {navStateAtom} from "../atoms.ts";
+
 type NavItemProps = {
     icon: string
     label: string
-    onClick?: () => void
+    navKey: "home" | "menu" | "favorite" | "ticket"
+
 }
 
-export const NavItem = ({ icon, label, onClick }: NavItemProps) => {
+export function NavItem  ({ icon, label,navKey }: NavItemProps){
+    const [navState, setNavState] = useAtom(navStateAtom)
+    console.log(navKey)
     return (
-        <div className="navbarItems" onClick={onClick}>
-            <div className="navbarItemIcon"><span
-                className="material-symbols-rounded">{icon}</span>
+        <div className={
+            navState==navKey?"navbarItem focused":"navbarItem"
+        } onClick={()=>setNavState(navKey)}>
+            <div className="navbarItemIcon">
+                <span className="material-symbols-rounded">{icon}</span>
             </div>
             <div className="navbarItemTitle">{label}
             </div>
